@@ -7,8 +7,8 @@ import { ScrapeService } from './scrape/scrape.service';
 import {TypeOrmModule} from '@nestjs/typeorm'
 import { keyPhrase } from './phrase/keyPhrase.entity';
 import { Article } from './article/article.entity';
-import { EntityArticle } from './art-ent-relationships/EntArtRelationship.entity';
-import { PhraseArticle } from './art-phrase-relationships/PhraseArtRelationship.entity';
+import { EntityArticle } from './article-entities-relationships/ArticleEntitiesRelationship.entity';
+import { PhraseArticle } from './art-phrase-relationships/ArticlePhraseRelationship.entity';
 import { Entities } from './entities/entities.entity';
 
 @Module({
