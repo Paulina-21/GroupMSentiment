@@ -1,12 +1,13 @@
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { keyPhrase } from './keyPhrase.entity';
-import { PhraseService } from './phrase.service';
-import { PhrasesController } from './phrases.controller';
+import { Module } from "@nestjs/common";
+import { PhraseService } from "./phrase.service";
+import { PhraseController } from "./phrase.controller";
+import { Phrase } from "./entities/phrase.entity";
+import { TypeOrmModule } from "@nestjs/typeorm";
 
 @Module({
-    imports: [TypeOrmModule.forFeature([keyPhrase])],
+  imports: [TypeOrmModule.forFeature([Phrase])],
+  controllers: [PhraseController],
   providers: [PhraseService],
-  controllers: [PhrasesController],
+  exports: [PhraseService, TypeOrmModule],
 })
 export class PhraseModule {}

@@ -1,8 +1,11 @@
 import { Module } from '@nestjs/common';
-import { ClientsModule, Transport } from '@nestjs/microservices';
 import { ScrapeController } from './scrape.controller';
-import { ScrapeService } from './scrape.service';
+import { ClientsModule, Transport } from '@nestjs/microservices';
+import { ArticleModule } from 'src/article/article.module';
+import { EntityModule } from 'src/entity/entity.module';
+import { PhraseModule } from 'src/phrase/phrase.module';
 
+const SCRAPE_LINK_REQUEST = 'scrape-link-request';
 @Module({
   imports: [
     ClientsModule.register([
@@ -11,15 +14,17 @@ import { ScrapeService } from './scrape.service';
         transport: Transport.RMQ,
         options: {
           urls: ['amqp://localhost:5672'],
-          queue: 'search_queue',
+          queue: SCRAPE_LINK_REQUEST,
           queueOptions: {
             durable: false,
           },
         },
       },
     ]),
+    ArticleModule,
+    EntityModule,
+    PhraseModule,
   ],
   controllers: [ScrapeController],
-  providers: [ScrapeService],
 })
 export class ScrapeModule {}

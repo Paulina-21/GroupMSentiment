@@ -1,24 +1,35 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { keyPhrase } from './keyPhrase.entity';
+import { Injectable } from "@nestjs/common";
+import { CreatePhraseDto } from "./dto/create-phrase.dto";
+import { UpdatePhraseDto } from "./dto/update-phrase.dto";
+import { Phrase } from "./entities/phrase.entity";
+import { Repository } from "typeorm";
+import { InjectRepository } from "@nestjs/typeorm";
 
 @Injectable()
 export class PhraseService {
   constructor(
-    @InjectRepository(keyPhrase)
-    private articlesRepository: Repository<keyPhrase>,
+    @InjectRepository(Phrase)
+    private phraseRepository: Repository<Phrase>
   ) {}
-
-  findAll(): Promise<keyPhrase[]> {
-    return this.articlesRepository.find();
+  async create(createPhraseDto: CreatePhraseDto) {
+    const article = this.phraseRepository.create(createPhraseDto);
+    await this.phraseRepository.save(createPhraseDto);
+    return article;
   }
 
-  findOne(id: string): Promise<keyPhrase> {
-    return this.articlesRepository.findOne(id);
+  findAll() {
+    return `This action returns all phrase`;
   }
 
-  async remove(id: string): Promise<void> {
-    await this.articlesRepository.delete(id);
+  findOne(id: number) {
+    return `This action returns a #${id} phrase`;
+  }
+
+  update(id: number, updatePhraseDto: UpdatePhraseDto) {
+    return `This action updates a #${id} phrase`;
+  }
+
+  remove(id: number) {
+    return `This action removes a #${id} phrase`;
   }
 }
